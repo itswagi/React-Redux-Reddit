@@ -8,7 +8,7 @@ const initialState = {
 }
 
 export const fetchPosts = createAsyncThunk('posts/fetch', async () => {
-    const response = await axios.get('https://www.reddit.com/best.json?limit=2')
+    const response = await axios.get('https://www.reddit.com/best.json?limit=10')
     //console.log(response.data.data.children)
     return response.data.data.children
 })
