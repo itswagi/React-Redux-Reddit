@@ -15,6 +15,7 @@ body {
   background-color: #d0e8f2;
   color: black;
   width: 30rem;
+  margin-bottom: 2rem;
 }
 #container {
 padding-left: 200px;   /* LC width */

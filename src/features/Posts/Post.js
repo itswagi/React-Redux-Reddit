@@ -1,13 +1,23 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
-export function Post(){
-    return (
+export const Post = () => {
+
+    const posts = useSelector(state => state.posts)
+
+    const renderedPosts = posts.map(post => (
         <div className="card cards">
             <img src="..." class="card-img-top" alt="..."/>
             <div className="card-body">
-                <h5 className="card-title">Card title</h5>
-                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <h5 className="card-title">{post.title}</h5>
+                <p className="card-text">{post.text}</p>
             </div>
         </div>
-    )
+    ))
+
+    return (
+        <React.Fragment>
+            {renderedPosts}
+        </React.Fragment>
+    )   
 }
