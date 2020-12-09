@@ -2,7 +2,7 @@ import React from 'react'
 
 export function Navbar(){
     return (
-        <nav class="navbar">
+        <nav className="navbar">
             React-Redux Reddit Client
         </nav>
     )

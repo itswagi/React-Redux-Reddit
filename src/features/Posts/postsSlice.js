@@ -1,28 +1,37 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import axios from 'axios'
 
-const initialState = [
-    {
-        id: 1,
-        title: 'Post 1 Title',
-        url: 'something',
-        authorName: 'self',
-        image: 'something',
-        text: 'blah blah'
-    },
-    {
-        id: 2,
-        title: 'Post 1 Title',
-        url: 'something',
-        authorName: 'self',
-        image: 'something',
-        text: 'blah blah'
-    }
-]
+const initialState = {
+    posts: [],
+    status: 'idle',
+    error: null
+}
+
+export const fetchPosts = createAsyncThunk('posts/fetch', async () => {
+    const response = await axios.get('https://www.reddit.com/best.json?limit=2')
+    //console.log(response.data.data.children)
+    return response.data.data.children
+})
 
 const postsSlice = createSlice({
     name: 'posts',
     initialState,
-    reducers: {}
+    reducers: {},
+    extraReducers: {
+        [fetchPosts.pending]: (state, action) => {
+            state.status = 'loading'
+        },
+        [fetchPosts.fulfilled]: (state, action) => {
+            state.status = 'succeeded'
+            state.posts = state.posts.concat(action.payload)
+        },
+        [fetchPosts.rejected]: (state, action) => {
+            state.status = 'failed'
+            state.error = action.error.message
+        }
+    }
 })
 
 export default postsSlice.reducer
+
+export const selectAllPosts = state => state.posts
